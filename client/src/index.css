@@ -1,0 +1,198 @@
+@import "tailwindcss";
+
+/* ============================================
+   Scan2Order — Premium Restaurant CSS System
+   ============================================ */
+
+/* ---------- Design Tokens ---------- */
+:root {
+  --color-ink: #1F1A17;
+  --color-cream: #FFFDF9;
+  --color-warm-bg: #F6F4EE;
+  --color-accent: #C96A4A;
+  --color-accent-deep: #B85C3E;
+  --color-dark-bg: #18120f;
+  --color-success: #2D6A4F;
+  --color-danger: #B85C3E;
+  --color-border-light: rgba(31, 26, 23, 0.1);
+  --color-border-medium: rgba(31, 26, 23, 0.15);
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 3rem;
+  --shadow-card: 0 18px 45px rgba(31, 26, 23, 0.08);
+  --shadow-elevated: 0 24px 60px rgba(31, 26, 23, 0.12);
+  --shadow-button: 0 12px 28px rgba(31, 26, 23, 0.14);
+}
+
+/* ---------- Typography ---------- */
+.font-serif-display {
+  font-family: "Georgia", "Times New Roman", serif;
+}
+
+.section-kicker {
+  font-size: 0.875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C96A4A;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* ---------- Premium Surface Cards ---------- */
+.luxury-card {
+  background: #FFFDF9;
+  border: 1px solid rgba(31, 26, 23, 0.1);
+  box-shadow: 0 18px 45px rgba(31, 26, 23, 0.06);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.luxury-card:hover {
+  border-color: rgba(31, 26, 23, 0.18);
+  box-shadow: 0 24px 60px rgba(31, 26, 23, 0.1);
+}
+
+.premium-surface {
+  background: #FFFDF9;
+  border: 1px solid rgba(31, 26, 23, 0.08);
+  box-shadow: 0 10px 30px rgba(31, 26, 23, 0.04);
+}
+
+/* ---------- Premium Input Fields ---------- */
+.premium-input {
+  width: 100%;
+  border: 1.5px solid rgba(31, 26, 23, 0.18);
+  border-radius: 1rem;
+  background: #FFFDF9;
+  color: #1F1A17;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.premium-input::placeholder {
+  color: rgba(31, 26, 23, 0.35);
+  font-weight: 400;
+}
+
+.premium-input:focus {
+  border-color: #C96A4A;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(201, 106, 74, 0.1), 0 4px 16px rgba(31, 26, 23, 0.04);
+}
+
+.premium-input:hover:not(:focus):not(:disabled) {
+  border-color: rgba(31, 26, 23, 0.35);
+  background: #fff;
+}
+
+/* ---------- Premium Select Dropdown ---------- */
+.premium-select {
+  width: 100%;
+  border: 1.5px solid rgba(31, 26, 23, 0.18);
+  border-radius: 1rem;
+  background: #FFFDF9;
+  color: #1F1A17;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: 0 2.5rem 0 1rem;
+  height: 3rem;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%231F1A17' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.premium-select:focus {
+  border-color: #C96A4A;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(201, 106, 74, 0.1), 0 4px 16px rgba(31, 26, 23, 0.04);
+}
+
+.premium-select:hover:not(:focus):not(:disabled) {
+  border-color: rgba(31, 26, 23, 0.35);
+  background-color: #fff;
+}
+
+/* ---------- Button Sweep Animation ---------- */
+.button-sweep {
+  position: relative;
+  overflow: hidden;
+}
+
+.button-sweep::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.08) 45%, rgba(255, 255, 255, 0.18) 50%, rgba(255, 255, 255, 0.08) 55%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.button-sweep:hover::after {
+  transform: translateX(100%);
+}
+
+/* ---------- Divider ---------- */
+.soft-divider {
+  height: 1px;
+  background: rgba(31, 26, 23, 0.1);
+  width: 100%;
+}
+
+/* ---------- Header Glass ---------- */
+.header-glass {
+  background: rgba(255, 253, 249, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(31, 26, 23, 0.06);
+}
+
+/* ---------- Scrollbar Hide ---------- */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---------- Animations ---------- */
+@keyframes soft-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Page Shell ---------- */
+.page-shell {
+  width: 100%;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .page-shell {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-shell {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
