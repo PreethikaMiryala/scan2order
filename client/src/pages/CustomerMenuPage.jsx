@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Search } from "lucide-react";
 import BackButton from "../components/BackButton";
 import EmptyState from "../components/EmptyState";
@@ -14,7 +14,6 @@ const CATEGORIES = [
   "All",
   "Main Course",
   "Starters",
-  "Drinks",
   "Desserts",
   "Ice Cream",
   "Snacks",
@@ -30,9 +29,25 @@ const CATEGORIES = [
 function CustomerMenuPage() {
   const { restaurantId } = useParams();
   const [searchParams] = useSearchParams();
-  const table = searchParams.get("table") || "1";
-  const { items, loading, error } = useMenu(restaurantId);
+  const tableFromQuery = searchParams.get("table");
+
+  // Option A: /menu/:restaurantId (legacy) and /menu/table/:tableNumber (official)
+  // If restaurantId is missing, table comes from /menu/table/:tableNumber route.
+  const { tableNumber } = useParams();
+  const table = tableFromQuery || tableNumber || "1";
+
+  const { items, loading, error } = useMenu(restaurantId || null);
+
   const { cart, addItem, updateQuantity } = useCart();
+
+  const navigate = useNavigate();
+
+  function handleViewCart() {
+    navigate('/cart');
+  }
+
+
+
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
 
@@ -71,6 +86,7 @@ function CustomerMenuPage() {
         }
         navClassName="min-h-20"
       >
+
         <Link
           to="/"
           className="font-serif-display text-2xl leading-none text-[#1F1A17] transition duration-300 hover:text-[#C96A4A]"
@@ -83,6 +99,7 @@ function CustomerMenuPage() {
         <div className="mb-6 flex items-center justify-between gap-3 md:hidden">
           <BackButton />
         </div>
+
 
         {/* Search Bar */}
         <div className="relative">
@@ -161,6 +178,19 @@ function CustomerMenuPage() {
           </div>
         ) : null}
       </main>
+
+      {cart.items.length > 0 ? (
+        <button
+          type="button"
+          onClick={handleViewCart}
+          className="fixed bottom-6 right-6 z-40 flex min-h-12 items-center gap-2 rounded-full bg-[#1F1A17] px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(31,26,23,0.18)] transition-transform duration-200 hover:-translate-y-0.5"
+        >
+          <span>View Cart</span>
+          <span className="ml-1 inline-flex min-w-[24px] items-center justify-center rounded-full bg-[#C96A4A] px-2 py-0.5 text-xs font-bold">
+            {cart.items.reduce((sum, it) => sum + it.quantity, 0)}
+          </span>
+        </button>
+      ) : null}
     </div>
   );
 }

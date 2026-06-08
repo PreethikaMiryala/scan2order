@@ -14,8 +14,11 @@ export function saveQrCodes(codes) {
 
 export function buildMenuUrl(restaurantId, tableNumber) {
   const origin = window.location.origin;
-  return `${origin}/menu/${restaurantId}?table=${encodeURIComponent(tableNumber)}`;
+  // Option A (official): /menu/table/:tableNumber
+  // restaurantId is embedded in DB via the table mapping, so QR only needs tableNumber.
+  return `${origin}/menu/table/${encodeURIComponent(tableNumber)}`;
 }
+
 
 export async function createQrCode({ restaurantId, tableNumber }) {
   const url = buildMenuUrl(restaurantId, tableNumber);

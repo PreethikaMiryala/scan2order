@@ -8,33 +8,24 @@ import EmptyState from "../components/EmptyState";
 import Header from "../components/Header";
 import QuantityControl from "../components/QuantityControl";
 import { useCart } from "../context/CartContext";
-import { useOrders } from "../context/OrderContext";
+
 import { currency } from "../utils/format";
+
 
 function CartPage() {
   const navigate = useNavigate();
+
   const { cart, subtotal, updateQuantity, removeItem, clearCart } = useCart();
-  const { placeOrder } = useOrders();
+
   const [notes, setNotes] = useState("");
   const [paymentType, setPaymentType] = useState("Pay Later");
-  const service = subtotal > 0 ? subtotal * 0.05 : 0;
+
+  const service = 0;
   const total = subtotal + service;
 
-  function handlePlaceOrder() {
-    const order = placeOrder({
-      restaurantId: cart.restaurantId,
-      table: cart.table || "1",
-      items: cart.items,
-      notes,
-      paymentType,
-      paymentStatus: paymentType === "Pay Now" ? "Pending" : "Pay Later",
-      subtotal,
-      total,
-      status: "New",
-    });
-    clearCart();
-    navigate("/order-success", { state: { order } });
-  }
+  const goCheckout = () => {
+    navigate("/checkout");
+  };
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
@@ -99,7 +90,12 @@ function CartPage() {
                   </button>
                 ))}
               </div>
-              <Button className="mt-6 w-full" onClick={handlePlaceOrder}>Place Order</Button>
+              <div className="mt-6">
+                <Button className="w-full" onClick={goCheckout} disabled={cart.items.length === 0}>
+                  Proceed to Checkout
+                </Button>
+              </div>
+
             </aside>
           </div>
         )}

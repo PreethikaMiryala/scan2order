@@ -11,9 +11,23 @@ import { currency } from "../utils/format";
 
 function AdminDashboardPage() {
   const { user } = useAuth();
-  const { orders, liveOrders, history, setStatus } = useOrders();
-  const stats = buildLocalAdminStats(orders);
+  const {
+  orders = [],
+  liveOrders = [],
+  history = [],
+  setStatus = () => {}
+} = useOrders() || {};
+  const safeOrders = Array.isArray(orders) ? orders : [];
+  const safeLiveOrders = Array.isArray(liveOrders) ? liveOrders : [];
+  const safeHistory = Array.isArray(history) ? history : [];
 
+  const stats =
+    buildLocalAdminStats(safeOrders) || {
+      activeOrders: 0,
+      revenue: 0,
+      tablesActive: 0,
+      totalOrders: 0,
+    };
   return (
     <div className="mx-auto max-w-7xl">
       <header className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
@@ -35,12 +49,12 @@ function AdminDashboardPage() {
         <div className="mb-5 flex items-center justify-between gap-4">
           <h2 className="font-serif-display text-4xl text-[#1F1A17]">Live orders</h2>
         </div>
-        {liveOrders.length === 0 ? (
+        {safeLiveOrders.length === 0 ? (
           <EmptyState title="No active orders" message="New customer checkouts will appear here immediately after they are placed." />
         ) : (
           <motion.div layout className="grid gap-4 xl:grid-cols-2">
             <AnimatePresence mode="popLayout">
-              {liveOrders.map((order) => (
+              {safeLiveOrders.map((order) => (
               <motion.article key={order.id} layout whileHover={{ y: -4 }} className="luxury-card rounded-3xl p-6">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="min-w-0">
@@ -80,11 +94,11 @@ function AdminDashboardPage() {
           <History className="h-6 w-6 text-[#C96A4A]" />
           <h2 className="font-serif-display text-4xl text-[#1F1A17]">Order history</h2>
         </div>
-        {history.length === 0 ? (
+        {safeHistory.length === 0 ? (
           <EmptyState title="No completed orders" message="Completed, cancelled, and rejected orders will collect here for service review." />
         ) : (
           <div className="grid gap-3">
-            {history.map((order) => (
+            {safeHistory.map((order) => (
               <article key={order.id} className="premium-surface grid gap-3 rounded-2xl p-4 sm:grid-cols-[1fr_auto_auto] sm:items-center">
                 <div className="min-w-0">
                   <p className="break-words text-xs uppercase tracking-[0.18em] text-[#C96A4A]">{order.id}</p>
