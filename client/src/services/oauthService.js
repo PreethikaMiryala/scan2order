@@ -3,7 +3,7 @@ import { supabase } from "../lib/supabase";
 export async function startGoogleOAuth() {
   const redirectTo =
   import.meta.env.VITE_SUPABASE_AUTH_REDIRECT_URL ||
-  `${window.location.origin}/admin/login`;
+  `${window.location.origin}/admin/dashboard`;
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {

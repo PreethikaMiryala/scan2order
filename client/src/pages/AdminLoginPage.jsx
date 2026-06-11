@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
@@ -12,10 +12,21 @@ import { getAccessKeyHint } from "../services/authService";
 function AdminLoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, sessionExpired, authError } = useAuth();
+  const {
+  login,
+  sessionExpired,
+  authError,
+  isAuthenticated,
+} = useAuth();
   const [form, setForm] = useState({ email: "", password: "", accessKey: "" });
   const [loading, setLoading] = useState(false);
   const from = location.state?.from?.pathname || "/admin/dashboard";
+
+  useEffect(() => {
+  if (isAuthenticated) {
+    navigate("/admin/dashboard", { replace: true });
+  }
+}, [isAuthenticated, navigate]);
 
   function updateField(event) {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
